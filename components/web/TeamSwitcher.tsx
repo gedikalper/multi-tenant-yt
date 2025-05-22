@@ -12,6 +12,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 export function TeamSwitcher({
   teams,
@@ -30,7 +31,7 @@ export function TeamSwitcher({
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex w-full items-center gap-2 rounded-lg p-2 hover:bg-muted">
+          <button className="flex w-full items-center gap-2 rounded-lg p-2 hover:bg-muted outline border">
             <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground overflow-hidden">
               <img
                 src={`https://avatar.vercel.sh/${activeOrg.name}`}
@@ -45,7 +46,7 @@ export function TeamSwitcher({
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+          className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg "
           align="start"
           sideOffset={4}
         >
@@ -53,16 +54,18 @@ export function TeamSwitcher({
             Teams
           </DropdownMenuLabel>
           {teams.map((team, index) => (
-            <DropdownMenuItem key={team.name} className="gap-2 p-2">
-              <div className="flex size-6 items-center justify-center rounded-sm border overflow-hidden">
-                <img
-                  src={`https://avatar.vercel.sh/${team.name}`}
-                  alt={team.name}
-                  className="size-6"
-                />
-              </div>
-              {team.name}
-              <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+            <DropdownMenuItem key={team.name} className="gap-2 p-2" asChild>
+              <LoginLink orgCode={team.orgCode}>
+                <div className="flex size-6 items-center justify-center rounded-sm border overflow-hidden">
+                  <img
+                    src={`https://avatar.vercel.sh/${team.name}`}
+                    alt={team.name}
+                    className="size-6"
+                  />
+                </div>
+                {team.name}
+                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+              </LoginLink>
             </DropdownMenuItem>
           ))}
           <DropdownMenuSeparator />
